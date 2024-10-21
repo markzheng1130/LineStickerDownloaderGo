@@ -18,3 +18,17 @@
     - post handling
         - compress stickers to gzip
         - save to disk or API response
+
+
+- 預計分成3個階段
+    - (1) 先做成local command line tool
+        - hard code url字串
+        - 落地成gzip
+
+    - (2) 接口改成API
+        - API request要夾帶input url
+        - API response要回傳gzip檔
+    
+    - (3) 再增加web UI
+        - 透過web UI，發起API request
+        - 透過web UI，展示API response 收回來的貼圖
