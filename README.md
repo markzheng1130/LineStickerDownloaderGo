@@ -7,7 +7,7 @@
 
 
 - a handler
-    - download page source (input url)
+    - download page source (from input url)
 
     - sticker url parser
         - parse sticker urls
