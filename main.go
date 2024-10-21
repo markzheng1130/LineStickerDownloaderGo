@@ -3,5 +3,6 @@ package main
 import "fmt"
 
 func main() {
-	fmt.Println("hello world.")
+	stickerUrl := "https://store.line.me/stickershop/product/21802595/en"
+	fmt.Printf("stickerUrl %s", stickerUrl)
 }
