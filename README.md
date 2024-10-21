@@ -22,8 +22,8 @@
 
 - 預計分成3個階段
     - (1) 先做成local command line tool
-        - hard code url字串
-        - 落地成gzip
+        - input, hard code url字串
+        - output, gzip落地儲存
 
     - (2) 接口改成API
         - API request要夾帶input url
