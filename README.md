@@ -6,7 +6,7 @@
         - do the following steps
 
 
-- a handler
+- handler
     - download page source (from input url)
 
     - sticker url parser
