@@ -24,18 +24,20 @@ func (h *Handler) ParseStickerInfoFromLine(line string) error {
 	stickerUrlToken2 := "main.png"      // should not contains this
 	if (strings.Contains(line, stickerUrlToken1)) && (!strings.Contains(line, stickerUrlToken2)) {
 
-		line = line[len(stickerUrlToken1):] // should remove this prefix
-		line = strings.Trim(line, "'")      // should trim single-quote from 2 end
+		line = line[len(stickerUrlToken1):] // should remove prefix
+		line = strings.Trim(line, "'")      // should trim single-quote
 		fmt.Printf("[sticker URL][%v]\n", line)
 
-		var m map[string]interface{} // 用1個map來接，這是固定寫法，才有辨法剖析出巢狀結構
-
+		var m map[string]interface{}
 		if err := json.Unmarshal([]byte(line), &m); err != nil {
 			return err
 		}
 
-		fmt.Printf("[type][%v][url][%v]", m["type"], m[""])
-
+		if stickerType, ok := m["type"].(string); ok {
+			stickerUrlAttributeName := TypeUrlMapping[stickerType]
+			stickerUrl := m[stickerUrlAttributeName]
+			fmt.Printf("[stickerUrl][%v]\n", stickerUrl)
+		}
 	}
 
 	return nil
