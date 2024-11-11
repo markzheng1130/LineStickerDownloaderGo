@@ -7,6 +7,14 @@ import (
 	"strings"
 )
 
+var TypeUrlMapping = map[string]string{
+	"static":      "staticUrl",
+	"animation":   "animationUrl",
+	"popup":       "popupUrl",
+	"popup_sound": "popupUrl",
+	"name":        "staticUrl",
+}
+
 func (h *Handler) ParseStickerInfoFromLine(line string) error {
 	line = strings.TrimSpace(line)
 	line = html.UnescapeString(line)
