@@ -1,8 +1,8 @@
 package stickertype
 
-type Type string
+type Type int
 
 const (
-	Static  Type = "static"
-	Dynamic Type = "dynamic"
+	Static Type = iota
+	Dynamic
 )
