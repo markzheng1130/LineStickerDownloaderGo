@@ -43,7 +43,7 @@ func (h *Handler) ParseStickerUrlList() (string, error) {
 
 	for scanner.Scan() {
 		line := scanner.Text()
-		h.ParseStickerInfoFromLine(line)
+		err = h.ParseStickerInfoFromLine(line)
 	}
 
 	return "", nil
