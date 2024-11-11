@@ -27,7 +27,7 @@ func (h *Handler) ParseStickerUrlList() error {
 	scanner := bufio.NewScanner(resp.Body)
 	for scanner.Scan() {
 		line := scanner.Text()
-		err = h.ParseStickerInfoFromLine(line)
+		err = h.ParseStickerUrl(line)
 		if err != nil {
 			return err
 		}
@@ -36,7 +36,7 @@ func (h *Handler) ParseStickerUrlList() error {
 	return nil
 }
 
-func (h *Handler) ParseStickerInfoFromLine(line string) error {
+func (h *Handler) ParseStickerUrl(line string) error {
 	stickerUrlToken1 := "data-preview=" // should contain this.
 	stickerUrlToken2 := "main.png"      // should not contain this.
 
