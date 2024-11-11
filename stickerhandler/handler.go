@@ -17,6 +17,7 @@ func New(webSourceUrl string) *Handler {
 }
 
 func (h *Handler) Run() {
+	// Retrieve all sticker URLs.
 	err := h.ParseStickerUrlList()
 	if err != nil {
 		fmt.Printf("Error when parsing sticker URL list: %v", err)
@@ -24,4 +25,11 @@ func (h *Handler) Run() {
 	}
 
 	fmt.Printf("[sticker URL list]%v\n", h.StickerUrlList)
+
+	// Parallel download and collect all.
+	// (TBD)
+
+	// Save to local.
+	// (TBD)
+
 }

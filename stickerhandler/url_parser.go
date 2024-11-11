@@ -25,7 +25,7 @@ func (h *Handler) ParseStickerUrlList() error {
 	defer resp.Body.Close()
 
 	scanner := bufio.NewScanner(resp.Body)
-	for scanner.Scan() {
+	for scanner.Scan() { // read body line by line.
 		line := scanner.Text()
 		err = h.ParseStickerUrl(line)
 		if err != nil {
