@@ -1,18 +1,39 @@
 package stickerhandler
 
 import (
+	"bufio"
 	"encoding/json"
 	"fmt"
 	"html"
+	"net/http"
 	"strings"
 )
 
-var TypeUrlMapping = map[string]string{
+var TypeToUrlMapping = map[string]string{
 	"static":      "staticUrl",    // 一般靜態
 	"animation":   "animationUrl", // 一般動圖
 	"popup":       "popupUrl",     // 全畫面動圖
 	"popup_sound": "popupUrl",     // 全畫面動圖 + 有聲音
 	"name":        "staticUrl",    // 可編輯文字
+}
+
+func (h *Handler) ParseStickerUrlList() error {
+	resp, err := http.Get(h.WebSourceUrl)
+	if err != nil {
+		return err
+	}
+	defer resp.Body.Close()
+
+	scanner := bufio.NewScanner(resp.Body)
+	for scanner.Scan() {
+		line := scanner.Text()
+		err = h.ParseStickerInfoFromLine(line)
+		if err != nil {
+			return err
+		}
+	}
+
+	return nil
 }
 
 func (h *Handler) ParseStickerInfoFromLine(line string) error {
@@ -36,7 +57,7 @@ func (h *Handler) ParseStickerInfoFromLine(line string) error {
 
 		// retrieve the sticker URL.
 		if stickerType, ok := m["type"].(string); ok {
-			stickerUrlAttributeName := TypeUrlMapping[stickerType]
+			stickerUrlAttributeName := TypeToUrlMapping[stickerType]
 			if stickerUrl, ok := m[stickerUrlAttributeName].(string); ok {
 				h.StickerUrlList = append(h.StickerUrlList, stickerUrl)
 				fmt.Printf("[sticker URL][%v]\n", stickerUrl)

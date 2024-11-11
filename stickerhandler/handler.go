@@ -1,9 +1,7 @@
 package stickerhandler
 
 import (
-	"bufio"
 	"fmt"
-	"net/http"
 )
 
 type Handler struct {
@@ -24,23 +22,6 @@ func (h *Handler) Run() {
 		fmt.Printf("Error when parsing sticker URL list: %v", err)
 		return
 	}
-}
 
-func (h *Handler) ParseStickerUrlList() error {
-	resp, err := http.Get(h.WebSourceUrl)
-	if err != nil {
-		return err
-	}
-	defer resp.Body.Close()
-
-	scanner := bufio.NewScanner(resp.Body)
-	for scanner.Scan() {
-		line := scanner.Text()
-		err = h.ParseStickerInfoFromLine(line)
-		if err != nil {
-			return err
-		}
-	}
-
-	return nil
+	fmt.Printf("[sticker URL list]%v\n", h.StickerUrlList)
 }
