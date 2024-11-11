@@ -25,17 +25,17 @@ func New(webSourceUrl string) *Handler {
 func (h *Handler) Run() {
 	fmt.Printf("Handler: %#v\n", h)
 
-	_, err := h.ParseStickerUrlList()
+	err := h.ParseStickerUrlList()
 	if err != nil {
 		fmt.Printf("Error when parsing sticker URL list: %v", err)
 		return
 	}
 }
 
-func (h *Handler) ParseStickerUrlList() (string, error) {
+func (h *Handler) ParseStickerUrlList() error {
 	resp, err := http.Get(h.WebSourceUrl)
 	if err != nil {
-		return "", err
+		return err
 	}
 	defer resp.Body.Close()
 
@@ -44,7 +44,10 @@ func (h *Handler) ParseStickerUrlList() (string, error) {
 	for scanner.Scan() {
 		line := scanner.Text()
 		err = h.ParseStickerInfoFromLine(line)
+		if err != nil {
+			return err
+		}
 	}
 
-	return "", nil
+	return nil
 }
