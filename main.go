@@ -1,13 +1,11 @@
 package main
 
 import (
-	"fmt"
-	"line-sticker-downloader-go/stickerHandler"
+	"line-sticker-downloader-go/stickerhandler"
 )
 
 func main() {
-	stickerUrl := "https://store.line.me/stickershop/product/21802595/en"
-	fmt.Printf("stickerUrl %s", stickerUrl)
-	h := stickerHandler.StickerHandler.New{}
-	fmt.Printf("[%#v]", h)
+	url := "https://store.line.me/stickershop/product/21802595/en"
+	h := stickerhandler.New(url)
+	h.Run()
 }
