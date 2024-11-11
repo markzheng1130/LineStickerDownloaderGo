@@ -1,8 +1,10 @@
 package stickertype
 
-type Type int
+type Type string
 
 const (
-	Static Type = iota
-	Dynamic
+	UnDefined  Type = "undefined"
+	Static     Type = "static-sticker"
+	Animation  Type = "animation-sticker"
+	PopupSound Type = "popup_sound-sticker"
 )

@@ -1,20 +1,23 @@
 package stickerhandler
 
 import (
+	"bufio"
 	"fmt"
-	"io"
+	stickertype "line-sticker-downloader-go/misc"
 	"net/http"
 )
 
 type Handler struct {
-	Url   string
-	Count int
+	WebSourceUrl   string
+	StickerType    stickertype.Type
+	StickerUrlList []string
 }
 
-func New(url string) *Handler {
+func New(webSourceUrl string) *Handler {
 	h := &Handler{}
-	h.Url = url
-	h.Count = 0
+	h.WebSourceUrl = webSourceUrl
+	h.StickerType = stickertype.UnDefined
+	h.StickerUrlList = []string{}
 
 	return h
 }
@@ -22,34 +25,26 @@ func New(url string) *Handler {
 func (h *Handler) Run() {
 	fmt.Printf("Handler: %#v\n", h)
 
-	webSource, err := h.DownloadWebSource()
+	_, err := h.ParseStickerUrlList()
 	if err != nil {
-		fmt.Printf("Error when downloading web source: %v", err)
-		return
-	}
-
-	stickerUrlList, err := h.ParseStickerUrl(webSource)
-	if err != nil {
-		fmt.Printf("Error when parsing sticker url: %v", err)
+		fmt.Printf("Error when parsing sticker URL list: %v", err)
 		return
 	}
 }
 
-func (h *Handler) DownloadWebSource() ([]byte, error) {
-	resp, err := http.Get(h.Url)
+func (h *Handler) ParseStickerUrlList() (string, error) {
+	resp, err := http.Get(h.WebSourceUrl)
 	if err != nil {
-		return nil, err
+		return "", err
 	}
 	defer resp.Body.Close()
 
-	if resp.StatusCode != http.StatusOK {
-		return nil, err
+	scanner := bufio.NewScanner(resp.Body)
+
+	for scanner.Scan() {
+		line := scanner.Text()
+		h.ParseStickerInfoFromLine(line)
 	}
 
-	webSource, err := io.ReadAll(resp.Body)
-	if err != nil {
-		return nil, err
-	}
-
-	return webSource, nil
+	return "", nil
 }
