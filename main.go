@@ -11,7 +11,7 @@ func main() {
 	// webSourceUrl := "https://store.line.me/stickershop/product/18085/zh-Hant" //type=popup_sound, url=popupUrl
 	// webSourceUrl := "https://store.line.me/emojishop/product/5bc84438031a6704f8cff722/en" //type=static, url=staticUrl
 	// webSourceUrl := "https://store.line.me/stickershop/product/17054/zh-Hant" //type=name, url=staticUrl
-
+	// webSourceUrl := "https://store.line.me/emojishop/product/64c242668f2d784bcb1e1920/en" //type=animation, url=animationUrl
 	h := stickerhandler.New(webSourceUrl)
 	h.Run()
 }
