@@ -37,10 +37,18 @@
 - 類型2 (streaming service)
     - (1) 先做成local command line tool
         - input, hard code url字串
+        - 把貼圖的binary資料跟metadata封裝起來
 
-    - (2) 把貼圖的binary資料，以及metadata，塞進mongo db
-     -  練習mongo db (infra設置) & 資料結構定義 (應用端)
+    - (2-1)塞進mongo db
+        - 練習mongo db infra設置 & 資料結構定義 (應用端)
 
-    - (3) 設計1個handler，從mongo db把貼圖資料讀出來
+    - (2-2) 塞進kafka 
+        - 練習kafka infra設置，以及message system的應用
+    
+    - (2-3) 塞進rabbit mq
+        - 練習message queue的應用
+        - rabbit mq 架構較單純，啟動就可以用了，不像mongo或kafka要讀通基礎infra架構
+
+    - (3) 承(2)，設計1個handler (consumer)，把貼圖資料讀出來
      - 再看是要落地，或是秀在GUI上
      - 貼圖怎麼使用沒那麼重要，這關賣點在練習event consumer的設計
